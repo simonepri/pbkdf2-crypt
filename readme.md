@@ -53,10 +53,9 @@
     <img src="https://img.shields.io/github/license/simonepri/pbkdf2-crypt.svg" alt="Project license" />
   </a>
 </p>
-<br />
 <p align="center">
   🔒 Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function.
-  
+
   <br/>
 
   <sub>
