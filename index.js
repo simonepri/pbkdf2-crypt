@@ -23,7 +23,7 @@ const defaults = {
   // significantly increasing the memory requirements, which increases the cost
   // for an attacker wishing to attack use hardware-based password crackers
   // based on GPUs or ASICs.
-  digest: 'sha512'
+  digest: 'sha512',
 };
 
 /**
@@ -68,7 +68,7 @@ function encodeHash(hdata) {
     hdata.salt,
     hdata.iterations,
     hdata.keylen,
-    hdata.digest
+    hdata.digest,
   ];
   const hash = array.join(',');
   return hash;
@@ -77,14 +77,16 @@ function encodeHash(hdata) {
 function decodeHash(hash) {
   const array = hash.split(',');
   if (array.length !== 5) {
-    throw new Error('The hash provided is not in the format "secret,salt,iterations,keylen,digest"');
+    throw new Error(
+      'The hash provided is not in the format "secret,salt,iterations,keylen,digest"'
+    );
   }
   const hdata = {
     secret: array[0],
     salt: array[1],
     iterations: parseInt(array[2], 10),
     keylen: parseInt(array[3], 10),
-    digest: array[4]
+    digest: array[4],
   };
   return hdata;
 }
@@ -106,14 +108,20 @@ function hash(password, options) {
   const hdata = {
     iterations: options.iterations || defaults.iterations,
     keylen: options.keylen || defaults.keylen,
-    digest: options.digest || defaults.digest
+    digest: options.digest || defaults.digest,
   };
 
   return new Promise((resolve, reject) => {
     createSalt(hdata.keylen)
       .then(salt => {
         hdata.salt = salt;
-        createSecret(password, hdata.salt, hdata.iterations, hdata.keylen, hdata.digest)
+        createSecret(
+          password,
+          hdata.salt,
+          hdata.iterations,
+          hdata.keylen,
+          hdata.digest
+        )
           .then(secret => {
             hdata.secret = secret;
             const hash = encodeHash(hdata);
@@ -142,7 +150,13 @@ function verify(hash, password) {
       return reject(err);
     }
 
-    createSecret(password, hdata.salt, hdata.iterations, hdata.keylen, hdata.digest)
+    createSecret(
+      password,
+      hdata.salt,
+      hdata.iterations,
+      hdata.keylen,
+      hdata.digest
+    )
       .then(secret => {
         const match = tsse(secret, hdata.secret);
         resolve(match);
@@ -153,5 +167,5 @@ function verify(hash, password) {
 
 module.exports = {
   hash,
-  verify
+  verify,
 };
