@@ -69,7 +69,7 @@
 npm install --save pbkdf2-crypt
 ```
 
-## Usage with promises
+## Usage
 ```js
 const pbkdf2c = require('pbkdf2-crypt');
 
