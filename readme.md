@@ -1,7 +1,7 @@
 <h1 align="center">
   <b>pbkdf2-crypt</b>
 </h1>
-<div align="center">
+<p align="center">
   <!-- CI - TravisCI -->
   <a href="https://travis-ci.org/simonepri/pbkdf2-crypt">
     <img src="https://img.shields.io/travis/simonepri/pbkdf2-crypt/master.svg?label=Mac%20OSX%20%26%20Linux" alt="Mac/Linux Build Status" />
@@ -22,22 +22,12 @@
   <a href="https://david-dm.org/simonepri/pbkdf2-crypt">
     <img src="https://david-dm.org/simonepri/pbkdf2-crypt/status.svg" alt="Dependency Status" />
   </a>
-</div>
-<div align="center">
+</p>
+<p align="center">
   <!-- Code Style - XO-Prettier -->
   <a href="https://github.com/sindresorhus/xo">
     <img src="https://img.shields.io/badge/code_style-XO+Prettier-5ed9c7.svg" alt="XO Code Style used" />
   </a>
-  <!-- Commit Style - Conventional -->
-  <a href="https://github.com/marionebl/commitlint/tree/master/@commitlint/config-conventional">
-    <img src="https://img.shields.io/badge/commit_style-conventional-9b59b6.svg" alt="Conventional Commit Style used" />
-  </a>
-  <!-- Versioning Style - SemVer -->
-  <a href="https://github.com/marionebl/commitlint/tree/master/@commitlint/config-conventional">
-    <img src="https://img.shields.io/badge/versioning_style-semver-2cc990.svg" alt="SemVer Versioning Style used" />
-  </a>
-</div>
-<div align="center">
   <!-- Test Runner - AVA -->
   <a href="https://github.com/avajs/ava">
     <img src="https://img.shields.io/badge/test_runner-AVA-fb3170.svg" alt="AVA Test Runner used" />
@@ -50,8 +40,8 @@
   <a href="https://github.com/sindresorhus/np">
     <img src="https://img.shields.io/badge/release_system-np-6c8784.svg" alt="NP Release System used" />
   </a>
-</div>
-<div align="center">
+</p>
+<p align="center">
   <!-- Version - npm -->
   <a href="https://www.npmjs.com/package/pbkdf2-crypt">
     <img src="https://img.shields.io/npm/v/pbkdf2-crypt.svg" alt="Latest version on npm" />
@@ -60,16 +50,16 @@
   <a href="https://github.com/simonepri/pbkdf2-crypt#license">
     <img src="https://img.shields.io/github/license/simonepri/pbkdf2-crypt.svg" alt="Project license" />
   </a>
-</div>
+</p>
 <br />
-<div align="center">
+<p align="center">
   🔒 Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function
-</div>
-<div align="center">
+</p>
+<p align="center">
   <sub>
     Coded with ❤️ by <a href="#authors">Simone Primarosa</a>.
   </sub>
-</div>
+</p>
 
 ## Install
 
