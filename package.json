@@ -51,7 +51,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "xo &&ava",
+    "test": "xo &&nyc ava",
     "release": "np",
     "update": "npm-check -u"
   },
