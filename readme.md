@@ -55,9 +55,10 @@
 </p>
 <br />
 <p align="center">
-  🔒 Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function
-</p>
-<p align="center">
+  🔒 Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function.
+  
+  <br/>
+
   <sub>
     Coded with ❤️ by <a href="#authors">Simone Primarosa</a>.
   </sub>
