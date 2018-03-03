@@ -22,8 +22,9 @@
   <a href="https://david-dm.org/simonepri/pbkdf2-crypt">
     <img src="https://david-dm.org/simonepri/pbkdf2-crypt/status.svg" alt="Dependency Status" />
   </a>
-</p>
-<p align="center">
+
+  <br/>
+
   <!-- Code Style - XO-Prettier -->
   <a href="https://github.com/sindresorhus/xo">
     <img src="https://img.shields.io/badge/code_style-XO+Prettier-5ed9c7.svg" alt="XO Code Style used" />
@@ -40,8 +41,9 @@
   <a href="https://github.com/sindresorhus/np">
     <img src="https://img.shields.io/badge/release_system-np-6c8784.svg" alt="NP Release System used" />
   </a>
-</p>
-<p align="center">
+
+  <br/>
+  
   <!-- Version - npm -->
   <a href="https://www.npmjs.com/package/pbkdf2-crypt">
     <img src="https://img.shields.io/npm/v/pbkdf2-crypt.svg" alt="Latest version on npm" />
