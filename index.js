@@ -8,7 +8,7 @@ const tsse = require('tsse');
 /**
  * Default configurations used to generate a new hash.
  * @private
- * @type {object}
+ * @type {Object}
  */
 const defaults = {
   // Minimum number of iterations recommended to ensure data safety,
@@ -95,7 +95,7 @@ function decodeHash(hash) {
  * Computes the secure hash string of the given password.
  * @public
  * @param  {string} password The password to hash.
- * @param  {object} [options] Configurations related to the hashing function.
+ * @param  {Object} [options] Configurations related to the hashing function.
  * @param  {number} [options.iterations] The number of iterations to compute the
  * derived key.
  * @param  {number} [options.keylen] Length of the computed derived key.

@@ -127,7 +127,7 @@ Computes the secure hash string of the given password.
 | Param | Type | Description |
 | --- | --- | --- |
 | password | <code>string</code> | The password to hash. |
-| [options] | <code>object</code> | Configurations related to the hashing function. |
+| [options] | <code>Object</code> | Configurations related to the hashing function. |
 | [options.iterations] | <code>number</code> | The number of iterations to compute the derived key. |
 | [options.keylen] | <code>number</code> | Length of the computed derived key. |
 | [options.digest] | <code>number</code> | A digest function from the crypto.getHashes() list of supported digest functions. |
