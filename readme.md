@@ -26,7 +26,7 @@
   <br/>
 
   <!-- Code Style - XO-Prettier -->
-  <a href="https://github.com/sindresorhus/xo">
+  <a href="https://github.com/xojs/xo">
     <img src="https://img.shields.io/badge/code_style-XO+Prettier-5ed9c7.svg" alt="XO Code Style used" />
   </a>
   <!-- Test Runner - AVA -->
@@ -43,7 +43,7 @@
   </a>
 
   <br/>
-  
+
   <!-- Version - npm -->
   <a href="https://www.npmjs.com/package/pbkdf2-crypt">
     <img src="https://img.shields.io/npm/v/pbkdf2-crypt.svg" alt="Latest version on npm" />
