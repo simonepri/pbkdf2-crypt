@@ -4,7 +4,7 @@
 <p align="center">
   <!-- CI - TravisCI -->
   <a href="https://travis-ci.org/simonepri/pbkdf2-crypt">
-    <img src="https://img.shields.io/travis/simonepri/pbkdf2-crypt/master.svg?label=Mac%20OSX%20%26%20Linux" alt="Mac/Linux Build Status" />
+    <img src="https://img.shields.io/travis/simonepri/pbkdf2-crypt/master.svg?label=MacOS%20%26%20Linux" alt="Mac/Linux Build Status" />
   </a>
   <!-- CI - AppVeyor -->
   <a href="https://ci.appveyor.com/project/simonepri/pbkdf2-crypt">
