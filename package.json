@@ -1,0 +1,82 @@
+{
+  "name": "pbkdf2-crypto",
+  "version": "0.0.0",
+  "description": "Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function",
+  "license": "MIT",
+  "homepage": "https://github.com/simonepri/pbkdf2-crypt#readme",
+  "repository": "github:simonepri/pbkdf2-crypt",
+  "bugs": {
+    "url": "https://github.com/simonepri/pbkdf2-crypt/issues",
+    "email": "simonepri@outlook.com"
+  },
+  "author": "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)",
+  "contributors": [
+    "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)"
+  ],
+  "keywords": [
+    "brute",
+    "brute force",
+    "credential",
+    "credential-plus",
+    "crypto",
+    "hash",
+    "function",
+    "hashing",
+    "password",
+    "password-pbkdf2",
+    "passwords",
+    "pbkdf",
+    "pbkdf2",
+    "pbkdf2-password",
+    "psswrd",
+    "pswd",
+    "rainbow",
+    "safe",
+    "safe",
+    "salt",
+    "secure",
+    "security",
+    "stretching",
+    "strong",
+    "timining",
+    "attack",
+    "verification",
+    "verify"
+  ],
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo &&ava",
+    "release": "np",
+    "update": "npm-check -u"
+  },
+  "dependencies": {
+    "pify": "^3.0.0",
+    "tsse": "^1.1.4"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "np": "*",
+    "npm-check": "*",
+    "nyc": "*",
+    "xo": "*"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "nyc": {
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  },
+  "xo": {
+    "prettier": true,
+    "space": true
+  }
+}
