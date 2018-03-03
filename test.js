@@ -3,9 +3,6 @@ import test from 'ava';
 import m from '.';
 
 test('should hash and verify a short password', async t => {
-  m
-    .hash('We are all unicorns', {digest: 'sha1', keylen: 64, iterations: 7500})
-    .then(console.log);
   const password = 'p';
 
   const hash = await m.hash(password);
