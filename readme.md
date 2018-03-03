@@ -104,7 +104,7 @@ pbkdf2c.hash('We are all unicorns', {digest: 'sha1', iterations: 15000})
   });
 ```
 
-# API
+## API
 
 <dl>
 <dt><a href="#hash">hash(password, [options])</a> ⇒ <code>Promise.&lt;string&gt;</code></dt>
