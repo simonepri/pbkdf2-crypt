@@ -3,10 +3,10 @@
   "name": "@phc/pbkdf2",
   "description": "Node.JS PBKDF2 password hashing algorithm following the PHC string format",
   "license": "MIT",
-  "homepage": "https://github.com/simonepri/pbkdf2-crypt#readme",
-  "repository": "github:simonepri/pbkdf2-crypt",
+  "homepage": "https://github.com/simonepri/phc-pbkdf2#readme",
+  "repository": "github:simonepri/phc-pbkdf2",
   "bugs": {
-    "url": "https://github.com/simonepri/pbkdf2-crypt/issues",
+    "url": "https://github.com/simonepri/phc-pbkdf2/issues",
     "email": "simonepri@outlook.com"
   },
   "author": "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)",
