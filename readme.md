@@ -319,7 +319,7 @@ Please check the [contributing guidelines][contributing] for more details. Thank
 
 ## Authors
 
-- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri][github:simonepri]) and on  *Twitter* ([🐦@simonepri][twitter:simoneprimarosa])
+- **Simone Primarosa** - *Github* ([@simonepri][github:simonepri]) • *Twitter* ([@simoneprimarosa][twitter:simoneprimarosa])
 
 See also the list of [contributors][contributors] who participated in this project.
 
