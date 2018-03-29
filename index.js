@@ -64,7 +64,7 @@ function genSalt(length) {
  * @param  {string} password The password to hash.
  * @param  {Object} [options] Optional configurations related to the hashing
  * function.
- * @param  {number} [options.iterations=10000] Optional number of iterations to use.
+ * @param  {number} [options.iterations=100000] Optional number of iterations to use.
  * Must be an integer within the range (`0` < `iterations` < `1<<32`).
  * @param  {number} [options.saltSize=16] Optional number of bytes to use when
  * autogenerating new salts. Me be between `0` and `1024`.

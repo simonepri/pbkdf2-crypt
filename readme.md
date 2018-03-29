@@ -282,7 +282,7 @@ format.
 | --- | --- | --- | --- |
 | password | <code>string</code> |  | The password to hash. |
 | [options] | <code>Object</code> |  | Optional configurations related to the hashing function. |
-| [options.iterations] | <code>number</code> | <code>10000</code> | Optional number of iterations to use. Must be an integer within the range (`0` < `iterations` < `1<<32`). |
+| [options.iterations] | <code>number</code> | <code>100000</code> | Optional number of iterations to use. Must be an integer within the range (`0` < `iterations` < `1<<32`). |
 | [options.saltSize] | <code>number</code> | <code>16</code> | Optional number of bytes to use when autogenerating new salts. Me be between `0` and `1024`. |
 | [options.digest] | <code>string</code> | <code>&quot;sha512&quot;</code> | Optinal name of digest to use when applying the key derivation functions. Can be one of [`'sha1'`, `'sha256'`, `'sha512'`]. |
 
