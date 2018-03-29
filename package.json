@@ -51,6 +51,7 @@
     "node": ">=4"
   },
   "scripts": {
+    "bench": "node bench.js",
     "test": "xo &&nyc ava",
     "release": "np",
     "update": "npm-check -u"
@@ -66,9 +67,11 @@
   },
   "devDependencies": {
     "ava": "*",
+    "execa": "^0.10.0",
     "np": "*",
     "npm-check": "*",
     "nyc": "*",
+    "sympact": "*",
     "xo": "*"
   },
   "ava": {
