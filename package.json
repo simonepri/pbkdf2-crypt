@@ -1,6 +1,6 @@
 {
   "name": "pbkdf2-crypt",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Cryptographically secure password hashing algorithm based on pbkdf2 key derivation function",
   "license": "MIT",
   "homepage": "https://github.com/simonepri/pbkdf2-crypt#readme",
