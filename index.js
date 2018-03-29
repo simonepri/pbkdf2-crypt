@@ -1,9 +1,12 @@
-/* eslint-disable max-params */
+/* eslint-disable max-params,capitalized-comments */
 'use strict';
 
 const crypto = require('crypto');
 const pify = require('pify');
 const tsse = require('tsse');
+const phc = require('@phc/format');
+
+const MAX_UINT32 = 4294967295; // 2**32 - 1
 
 /**
  * Default configurations used to generate a new hash.
@@ -11,19 +14,36 @@ const tsse = require('tsse');
  * @type {Object}
  */
 const defaults = {
-  // Minimum number of iterations recommended to ensure data safety,
+  // Minimum number of rounds recommended to ensure data safety,
   // this value changes every year as technology improves.
-  iterations: 10000,
+  iterations: 100000,
 
   // According to the PBKDF2 standard, the minimum recommended size for the salt
-  // is 64 bits
-  keylen: 128,
+  // is 128 bits
+  saltSize: 16, // bytes
 
-  // SHA-1 is sufficient however, using SHA-256 or SHA-512 has the benefit of
+  // SHA-1 is sufficient, using SHA-256 or SHA-512 has the benefit of
   // significantly increasing the memory requirements, which increases the cost
   // for an attacker wishing to attack use hardware-based password crackers
   // based on GPUs or ASICs.
   digest: 'sha512',
+};
+
+/**
+ * Info of the supported digest functions.
+ * @private
+ * @type {Object}
+ */
+const digests = {
+  sha1: {
+    keylen: 20, // bytes
+  },
+  sha256: {
+    keylen: 32, // bytes
+  },
+  sha512: {
+    keylen: 64, // bytes
+  },
 };
 
 /**
@@ -33,139 +53,167 @@ const defaults = {
  * @param  {number} length The length of the salt to be generated.
  * @return {Promise.<string>} The salt string.
  */
-function createSalt(length) {
-  return new Promise((resolve, reject) => {
-    pify(crypto.randomBytes)(length)
-      .then(buff => resolve(buff.toString('base64')))
-      .catch(reject);
-  });
+function genSalt(length) {
+  return pify(crypto.randomBytes)(length);
 }
 
 /**
- * Applies a Password-Based Key Derivation Function using Node's built-in
- * crypto.pbkdf2().
- * @private
- * @param  {string} password The password on which to apply the funciton.
- * @param  {string} salt An unique salt string.
- * @param  {string} iterations The number of iterations to compute the derived
- * key.
- * @param  {string} keylen Length of the computed derived key.
- * @param  {number} digest A digest function from the crypto.getHashes() list of
- * supported digest functions.
- * @return {Promise.<string>} The secret string.
- */
-function createSecret(password, salt, iterations, keylen, digest) {
-  return new Promise((resolve, reject) => {
-    pify(crypto.pbkdf2)(password, salt, iterations, keylen, digest)
-      .then(buff => resolve(buff.toString('base64')))
-      .catch(reject);
-  });
-}
-
-function encodeHash(hdata) {
-  const array = [
-    hdata.secret,
-    hdata.salt,
-    hdata.iterations,
-    hdata.keylen,
-    hdata.digest,
-  ];
-  const hash = array.join(',');
-  return hash;
-}
-
-function decodeHash(hash) {
-  const array = hash.split(',');
-  if (array.length !== 5) {
-    throw new Error(
-      'The hash provided is not in the format "secret,salt,iterations,keylen,digest"'
-    );
-  }
-  const hdata = {
-    secret: array[0],
-    salt: array[1],
-    iterations: parseInt(array[2], 10),
-    keylen: parseInt(array[3], 10),
-    digest: array[4],
-  };
-  return hdata;
-}
-
-/**
- * Computes the secure hash string of the given password.
+ * Computes the hash string of the given password in the PHC format using Node's
+ * built-in crypto.randomBytes() and crypto.pbkdf2().
  * @public
  * @param  {string} password The password to hash.
- * @param  {Object} [options] Configurations related to the hashing function.
- * @param  {number} [options.iterations] The number of iterations to compute the
- * derived key.
- * @param  {number} [options.keylen] Length of the computed derived key.
- * @param  {number} [options.digest] A digest function from the
- * crypto.getHashes() list of supported digest functions.
- * @returns {Promise<string>} The generated secure hash string.
+ * @param  {Object} [options] Optional configurations related to the hashing
+ * function.
+ * @param  {number} [options.iterations=10000] Optional number of iterations to use.
+ * Must be an integer within the range (`0` < `iterations` < `1<<32`).
+ * @param  {number} [options.saltSize=16] Optional number of bytes to use when
+ * autogenerating new salts. Me be between `0` and `1024`.
+ * @param  {string} [options.digest=sha512] Optinal name of digest to use when
+ * applying the key derivation functions.
+ * Can be one of [`'sha1'`, `'sha256'`, `'sha512'`].
+ * @returns {Promise.<string>} The generated secure hash string in the PHC
+ * format.
  */
 function hash(password, options) {
   options = options || {};
-  const hdata = {
-    iterations: options.iterations || defaults.iterations,
-    keylen: options.keylen || defaults.keylen,
-    digest: options.digest || defaults.digest,
-  };
+  const iterations = options.iterations || defaults.iterations;
+  let digest = options.digest || defaults.digest;
+  const saltSize = options.saltSize || defaults.saltSize;
 
-  return new Promise((resolve, reject) => {
-    createSalt(hdata.keylen)
-      .then(salt => {
-        hdata.salt = salt;
-        createSecret(
-          password,
-          hdata.salt,
-          hdata.iterations,
-          hdata.keylen,
-          hdata.digest
-        )
-          .then(secret => {
-            hdata.secret = secret;
-            const hash = encodeHash(hdata);
-            resolve(hash);
-          })
-          .catch(reject);
-      })
-      .catch(reject);
+  // Iterations Validation
+  if (typeof iterations !== 'number' || !Number.isInteger(iterations)) {
+    return Promise.reject(
+      new TypeError("The 'iterations' option must be an integer")
+    );
+  }
+  if (iterations < 1 || iterations > MAX_UINT32) {
+    return Promise.reject(
+      new TypeError(
+        `The 'iterations' option must be in the range (1 <= iterations <= ${MAX_UINT32})`
+      )
+    );
+  }
+
+  // Digest Validation
+  if (typeof digest !== 'string') {
+    return Promise.reject(
+      new TypeError("The 'digest' option must be a string")
+    );
+  }
+  digest = digest.toLowerCase();
+  if (!Object.prototype.hasOwnProperty.call(digests, digest)) {
+    return Promise.reject(
+      new TypeError(
+        `The 'digest' option must be one of: ${Object.keys(digests)}`
+      )
+    );
+  }
+
+  // Salt Size Validation
+  if (saltSize < 0 || saltSize > 1024) {
+    return Promise.reject(
+      new TypeError("The 'saltSize' option must be between 0 and 1024")
+    );
+  }
+
+  // Use the max size allowed for the given digest
+  const keylen = digests[digest].keylen;
+
+  return genSalt(saltSize).then(salt => {
+    return pify(crypto.pbkdf2)(password, salt, iterations, keylen, digest).then(
+      hash => {
+        const phcstr = phc.serialize({
+          id: `pbkdf2-${digest}`,
+          params: {i: iterations},
+          salt,
+          hash,
+        });
+        return phcstr;
+      }
+    );
   });
 }
 
 /**
- * Determines whether or not the user's input matches the secure hashed password.
+ * Determines whether or not the hash stored inside the PHC formatted string
+ * matches the hash generated for the password provided.
  * @public
- * @param  {string} hash Secure hash string generated from this package.
- * @param  {string} input User's password input.
- * @returns {Promise<boolean>} A boolean that is true if the hash computed
- * for the input matches.
+ * @param  {string} password User's password input.
+ * @param  {string} phcstr Secure hash string generated from this package.
+ * @returns {Promise.<boolean>} A boolean that is true if the hash computed
+ * for the password matches.
  */
-function verify(hash, password) {
-  return new Promise((resolve, reject) => {
-    let hdata;
-    try {
-      hdata = decodeHash(hash);
-    } catch (err) {
-      return reject(err);
-    }
+function verify(phcstr, password) {
+  let phcobj;
+  try {
+    phcobj = phc.deserialize(phcstr);
+  } catch (err) {
+    return Promise.reject(err);
+  }
 
-    createSecret(
-      password,
-      hdata.salt,
-      hdata.iterations,
-      hdata.keylen,
-      hdata.digest
-    )
-      .then(secret => {
-        const match = tsse(secret, hdata.secret);
-        resolve(match);
-      })
-      .catch(reject);
-  });
+  // Identifier Validation
+  const idparts = phcobj.id.split('-');
+  if (idparts.length !== 2 || idparts[0] !== 'pbkdf2') {
+    return Promise.reject(
+      new TypeError(`Incompatible ${phcobj.id} identifier found in the hash`)
+    );
+  }
+  if (!Object.prototype.hasOwnProperty.call(digests, idparts[1])) {
+    return Promise.reject(
+      new TypeError(`Unsupported ${idparts[1]} digest function`)
+    );
+  }
+  const digest = idparts[1];
+
+  // Iterations Validation
+  if (
+    typeof phcobj.params.i !== 'number' ||
+    !Number.isInteger(phcobj.params.i)
+  ) {
+    return Promise.reject(new TypeError("The 'i' param must be an integer"));
+  }
+  if (phcobj.params.i < 1 || phcobj.params.i > MAX_UINT32) {
+    return Promise.reject(
+      new TypeError(
+        `The 'i' param must be in the range (1 <= i <= ${MAX_UINT32})`
+      )
+    );
+  }
+  const iterations = phcobj.params.i;
+
+  // Salt Validation
+  if (typeof phcobj.salt === 'undefined') {
+    return Promise.reject(new TypeError('No salt found in the given string'));
+  }
+  const salt = phcobj.salt;
+
+  // Hash Validation
+  if (typeof phcobj.hash === 'undefined') {
+    return Promise.reject(new TypeError('No hash found in the given string'));
+  }
+  const hash = phcobj.hash;
+  const keylen = phcobj.hash.byteLength;
+
+  return pify(crypto.pbkdf2)(password, salt, iterations, keylen, digest).then(
+    newhash => {
+      const match = tsse(hash.toString('base64'), newhash.toString('base64'));
+      return match;
+    }
+  );
+}
+
+/**
+ * Gets the list of all identifiers supported by this hashing function.
+ * @public
+ * @returns {string[]} A list of identifiers supported by this
+ * hashing function.
+ */
+function identifiers() {
+  return Object.keys(digests).map(digest => `pbkdf2-${digest}`);
 }
 
 module.exports = {
   hash,
   verify,
+  identifiers,
 };
