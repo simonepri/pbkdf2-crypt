@@ -13,36 +13,7 @@
   "contributors": [
     "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)"
   ],
-  "keywords": [
-    "brute",
-    "brute force",
-    "credential",
-    "credential-plus",
-    "crypto",
-    "hash",
-    "function",
-    "hashing",
-    "password",
-    "password-pbkdf2",
-    "passwords",
-    "pbkdf",
-    "pbkdf2",
-    "pbkdf2-password",
-    "psswrd",
-    "pswd",
-    "rainbow",
-    "safe",
-    "safe",
-    "salt",
-    "secure",
-    "security",
-    "stretching",
-    "strong",
-    "timining",
-    "attack",
-    "verification",
-    "verify"
-  ],
+  "keywords": [],
   "main": "index.js",
   "files": [
     "index.js"
