@@ -63,6 +63,13 @@
   </sub>
 </p>
 
+<hr/>
+<p align="center">
+  <strong>DEPRECATED!!! USE <a href="https://github.com/simonepri/phc-pbkdf2">@phc/pbkdf2
+</a> INSTEAD</strong>
+</p>
+<hr/>
+
 ## Install
 
 ```bash
